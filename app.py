@@ -50,10 +50,10 @@ DICCIONARIO DE DATOS EPH. La base SQLite contiene 3 tablas principales:
    - ch04: Sexo (1 = Hombre, 2 = Mujer).
    - ch06: Edad en años.
    - itf: Ingreso Total Familiar.
-   - ipcf: Ingreso Per Cápita Familiar.
+   - ipcf: Ingreso Per Cápita Familiar. Los promedios de ingreso salen subestimados si el modelo no filtra ipcf > 0, conviene aplicarlo siempre.
    - pondera, pondih: Ponderadores poblacionales (usar siempre pondera o pondih para calcular totales o promedios representativos).
    - estado: Condición de actividad (1 = Ocupado, 2 = Desocupado, 3 = Inactivo).
-   - region: Código de región geográfico (1 = GBA, 2 = Pampeana, 3 = Cuyo, 4 = Noroeste, 5 = Patagonia, 6 = Noreste).
+   - region: Código de región geográfico (1 = GBA, 43 = Pampeana, 42 = Cuyo, 40 = Noroeste, 44 = Patagonia, 41 = Noreste).
 2. 'canastas': Contiene los umbrales monetarios de las líneas oficiales de pobreza. Columnas clave:
    - ano, trimestre, region: Para cruzar temporal y regionalmente con individuos.
    - lp_extrema: Línea de indigencia (CBA).
@@ -61,7 +61,7 @@ DICCIONARIO DE DATOS EPH. La base SQLite contiene 3 tablas principales:
 3. 'cargados': Tabla de control interno de trimestres procesados.
 """
 
-# 6. Interfaz de Usuario y Lógica Directa Nativa
+# 4. Interfaz de Usuario y Lógica Directa Nativa
 st.title("📊 EPH AI Explorer")
 st.markdown("Consulta y grafica los microdatos de la Encuesta Permanente de Hogares usando lenguaje natural.")
 
