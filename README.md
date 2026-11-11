@@ -26,7 +26,7 @@ flowchart LR
 ## 🧩 Estructura del Repositorio
 
 ```
-eph-llm-explorer/
+eph-etl-explorer/
 ├── etl/                           # 1. Construir la base
 │   ├── README.md                  #    documentación técnica del pipeline
 │   ├── eph_sql.py
@@ -94,7 +94,7 @@ EPH AI Explorer es una interfaz interactiva que democratiza el acceso a los micr
 
 1. **Clonar el repositorio e instalar dependencias:**
    ```bash
-   git clone https://github.com/Marco-D-Sosa/eph-llm-explorer.git
+   git clone https://github.com/Marco-D-Sosa/eph-etl-explorer.git
    cd eph-llm-explorer
    pip install -r requirements.txt
    ```
