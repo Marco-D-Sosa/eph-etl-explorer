@@ -6,6 +6,8 @@
 ![SQLite](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white)
 ![Stata](https://img.shields.io/badge/Stata-14%2B-1A5F91)
 
+> Este pipeline es parte del repositorio **EPH AI Explorer** ([ver README principal](../README.md)). La base `eph.db` que consulta la app se construyó con este proceso.
+
 ---
 
 ## Resumen
@@ -46,24 +48,24 @@ Separa el cambio de un año a otro en dos causas: que **cambió el nivel de ingr
 
 
 <p align="center">
-  <img src="Descomposicion%20de%20la%20pobreza/graficos/descomposicion_Anual.png" alt="Descomposición anual del cambio en la tasa de pobreza en efecto ingreso y efecto distribución" width="700">
+  <img src="../analisis/descomposicion_pobreza/graficos/descomposicion_Anual.png" alt="Descomposición anual del cambio en la tasa de pobreza en efecto ingreso y efecto distribución" width="700">
 </p>
 
 *Cada grupo de barras es el cambio entre dos años, en puntos porcentuales: en azul, lo explicado por los ingresos; en rojo, por la distribución; en verde, el total.*
 
-Código: [`Descomposicion de la pobreza/`](Descomposicion%20de%20la%20pobreza/)
+Código: [`analisis/descomposicion_pobreza/`](../analisis/descomposicion_pobreza/)
 
 ### Ejemplo 2: Pobreza en estudiantes universitarios
 
 Compara qué proporción de estudiantes universitarios vive en hogares pobres según estudien en universidad **pública o privada**, cómo trabajan y cómo se distribuyen por nivel de ingresos.
 
 <p align="center">
-  <img src="Pobreza%20universitaria/graficos/pobreza_pub_priv.png" alt="Evolución semestral de la pobreza en estudiantes universitarios, gestión pública y privada" width="700">
+  <img src="../analisis/pobreza_universitaria/graficos/pobreza_pub_priv.png" alt="Evolución semestral de la pobreza en estudiantes universitarios, gestión pública y privada" width="700">
 </p>
 
 *Porcentaje de estudiantes en hogares pobres, por semestre. Son estimaciones a partir de una encuesta por muestreo (ver [notas](#notas-metodológicas-y-limitaciones)).*
 
-Código: [`Pobreza universitaria/`](Pobreza%20universitaria/)
+Código: [`analisis/pobreza_universitaria/`](../analisis/pobreza_universitaria/)
 
 
 ## Detalle técnico
@@ -106,13 +108,13 @@ Qué hace `python eph_sql.py cargar` sin intervención:
 
 Con `python eph_sql.py exportar` se genera además `bases_eph_2016-2025.dta` (opcionalmente desde otro año: `exportar 2023`).
 
-La base no se incluye en el repo (está en `.gitignore`) porque se regenera con un comando a partir de fuentes públicas.
+La base no se incluye en el repo (está en `.gitignore`) porque se regenera con un comando a partir de fuentes públicas. La copia que consulta la app EPH AI Explorer se distribuye como archivo adjunto de un release del repositorio.
 
 ### Cómo reproducirlo
 
 **Requisitos**
 
-- Python 3.8 o superior y las librerías de `requirements.txt` (`pandas`, `numpy`, `openpyxl`, `xlrd`).
+- Python 3.8 o superior y las librerías de `requirements.txt` (en la raíz del repo). Para el pipeline solo hacen falta `pandas`, `numpy`, `openpyxl` y `xlrd`; el resto es para la app.
 - Conexión a internet en la primera corrida. Una vez cargada, la base se consulta sin conexión.
 - Stata 14 o superior, solo para los dos análisis de ejemplo. La base y los `.dta` se pueden usar desde cualquier otra herramienta.
 
@@ -120,25 +122,25 @@ La base no se incluye en el repo (está en `.gitignore`) porque se regenera con 
 
 1. Clonar e instalar dependencias:
    ```bash
-   git clone https://github.com/Marco-D-Sosa/SQL-eph-etl-pipeline.git
-   cd SQL-eph-etl-pipeline
+   git clone https://github.com/Marco-D-Sosa/eph-llm-explorer.git
+   cd eph-llm-explorer
    pip install -r requirements.txt
    ```
-2. Construir la base (la primera vez baja todo; las siguientes solo lo que falta):
+2. Construir la base (la primera vez baja todo; las siguientes solo lo que falta). Queda en `etl/eph.db`:
    ```bash
-   cd "Base de datos"
+   cd etl
    python eph_sql.py cargar      # descarga microdatos + canastas y arma eph.db
    python eph_sql.py pobreza     # imprime pobreza e indigencia por semestre
    python eph_sql.py exportar    # (opcional) genera un .dta para Stata
    ```
 3. Generar el extracto y correr el análisis que interese:
    ```bash
-   cd "../Descomposicion de la pobreza"     # o "../Pobreza universitaria"
-   python extraer_dta_descomp.py            # o extraer_dta_uni.py
+   cd ../analisis/descomposicion_pobreza     # o ../analisis/pobreza_universitaria
+   python extraer_dta_descomp.py             # o extraer_dta_uni.py
    ```
    Luego abrir el `.do` correspondiente en Stata, completar `local proy` con la ruta de esa carpeta y ejecutarlo. Los resultados quedan en un Excel y en `graficos/`.
 
-**Configuración** (al principio de `eph_sql.py`)
+**Configuración** (al principio de `etl/eph_sql.py`)
 
 | Variable | Qué controla |
 |---|---|
@@ -150,20 +152,24 @@ La base no se incluye en el repo (está en `.gitignore`) porque se regenera con 
 ### Estructura del repositorio
 
 ```
-SQL-eph-etl-pipeline/
-├── Base de datos/
-│   ├── eph_sql.py                    # descarga, carga, validación y vistas (el script principal)
-│   └── EPH diseño.pdf                # diseño de registro de la EPH (INDEC)
-├── Descomposicion de la pobreza/
-│   ├── extraer_dta_descomp.py        # extracto desde eph.db
-│   ├── descomposicion_pobreza.do     # descomposición Shapley y serie de tiempo
-│   └── graficos/
-├── Pobreza universitaria/
-│   ├── extraer_dta_uni.py            # extracto y deciles ponderados
-│   ├── pobreza_universitaria.do      # pobreza, empleo y distribución por decil/quintil
-│   └── graficos/
+eph-llm-explorer/
+├── app.py                              # app Streamlit (EPH AI Explorer)
 ├── requirements.txt
-└── LICENSE
+├── README.md
+├── LICENSE
+├── etl/
+│   ├── README.md                       # este documento
+│   ├── eph_sql.py                      # descarga, carga, validación y vistas (el script principal)
+│   └── EPH diseño.pdf                  # diseño de registro de la EPH (INDEC)
+└── analisis/
+    ├── descomposicion_pobreza/
+    │   ├── extraer_dta_descomp.py      # extracto desde etl/eph.db
+    │   ├── descomposicion_pobreza.do   # descomposición Shapley y serie de tiempo
+    │   └── graficos/
+    └── pobreza_universitaria/
+        ├── extraer_dta_uni.py          # extracto y deciles ponderados
+        ├── pobreza_universitaria.do    # pobreza, empleo y distribución por decil/quintil
+        └── graficos/
 ```
 
 ### Notas metodológicas y limitaciones

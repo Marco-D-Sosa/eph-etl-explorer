@@ -20,7 +20,7 @@ import numpy as np
 import pandas as pd
 
 AQUI = Path(__file__).resolve().parent
-DB = AQUI.parent / "Base de datos" / "eph.db"     # ajustar si la base esta en otro lugar
+DB = AQUI.parents[1] / "etl" / "eph.db"     # ajustar si la base esta en otro lugar
 SALIDA_UNI = AQUI / "universitarios.dta"
 
 SQL_UNI = """

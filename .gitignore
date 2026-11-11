@@ -1,6 +1,7 @@
 # Ignorar bases de datos pesadas 
 *.csv
 *.xlsx
+*canasta_tmp.xls
 *.dta
 *.db
 *.sqlite3
