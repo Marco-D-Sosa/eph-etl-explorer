@@ -149,28 +149,6 @@ La base no se incluye en el repo (está en `.gitignore`) porque se regenera con 
 | `EPH_ALIAS` / `CANASTA_ALIAS` | Nombres de archivo del INDEC que no siguen el patrón habitual |
 | `CONTROL` | Valores de referencia para validar el parseo de canastas |
 
-### Estructura del repositorio
-
-```
-eph-llm-explorer/
-├── app.py                              # app Streamlit (EPH AI Explorer)
-├── requirements.txt
-├── README.md
-├── LICENSE
-├── etl/
-│   ├── README.md                       # este documento
-│   ├── eph_sql.py                      # descarga, carga, validación y vistas (el script principal)
-│   └── EPH diseño.pdf                  # diseño de registro de la EPH (INDEC)
-└── analisis/
-    ├── descomposicion_pobreza/
-    │   ├── extraer_dta_descomp.py      # extracto desde etl/eph.db
-    │   ├── descomposicion_pobreza.do   # descomposición Shapley y serie de tiempo
-    │   └── graficos/
-    └── pobreza_universitaria/
-        ├── extraer_dta_uni.py          # extracto y deciles ponderados
-        ├── pobreza_universitaria.do    # pobreza, empleo y distribución por decil/quintil
-        └── graficos/
-```
 
 ### Notas metodológicas y limitaciones
 
