@@ -6,7 +6,7 @@
 ![SQLite](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white)
 ![Stata](https://img.shields.io/badge/Stata-14%2B-1A5F91)
 
-> Este pipeline es parte del repositorio **EPH AI Explorer** ([ver README principal](../README.md)). La base `eph.db` que consulta la app se construyó con este proceso.
+> Este es el primer paso del flujo completo del repositorio: construye la base que luego se analiza por cuenta propia (carpeta `analisis/`) o con IA (aplicación en la raíz). Ver el [README principal](../README.md).
 
 ---
 
@@ -38,35 +38,9 @@
 
 **Aplicable más allá de este caso:** la misma lógica sirve para cualquier proceso que consolide archivos periódicos de fuentes externas (reportes, bases de clientes o proveedores, datos públicos) y quiera dejar de hacerlo a mano.
 
-## Qué se puede hacer con los datos listos
+   ## Qué se puede hacer con los datos listos
 
-Cuando la preparación de datos está resuelta, analizar es mucho más simple. Como demostración, usé la misma base para responder dos preguntas distintas, sin repetir el trabajo previo.
-
-### Ejemplo 1: ¿Por qué cambió la pobreza?
-
-Separa el cambio de un año a otro en dos causas: que **cambió el nivel de ingresos** de los hogares, o que **cambió cómo se reparten** esos ingresos. También incluye comparaciones entre períodos y escenarios hipotéticos ("qué hubiera pasado si...").
-
-
-<p align="center">
-  <img src="../analisis/descomposicion_pobreza/graficos/descomposicion_Anual.png" alt="Descomposición anual del cambio en la tasa de pobreza en efecto ingreso y efecto distribución" width="700">
-</p>
-
-*Cada grupo de barras es el cambio entre dos años, en puntos porcentuales: en azul, lo explicado por los ingresos; en rojo, por la distribución; en verde, el total.*
-
-Código: [`analisis/descomposicion_pobreza/`](../analisis/descomposicion_pobreza/)
-
-### Ejemplo 2: Pobreza en estudiantes universitarios
-
-Compara qué proporción de estudiantes universitarios vive en hogares pobres según estudien en universidad **pública o privada**, cómo trabajan y cómo se distribuyen por nivel de ingresos.
-
-<p align="center">
-  <img src="../analisis/pobreza_universitaria/graficos/pobreza_pub_priv.png" alt="Evolución semestral de la pobreza en estudiantes universitarios, gestión pública y privada" width="700">
-</p>
-
-*Porcentaje de estudiantes en hogares pobres, por semestre. Son estimaciones a partir de una encuesta por muestreo (ver [notas](#notas-metodológicas-y-limitaciones)).*
-
-Código: [`analisis/pobreza_universitaria/`](../analisis/pobreza_universitaria/)
-
+   Con la base armada se puede analizar por cuenta propia o consultarla en lenguaje natural. El repositorio incluye dos ejemplos en Stata, en [`analisis/`](../analisis/): la descomposición del cambio en la pobreza y la pobreza en estudiantes universitarios. También está la aplicación [EPH AI Explorer](https://eph-llm-explorer.streamlit.app/), que traduce preguntas en español a SQL y grafica el resultado. Los ejemplos con sus gráficos están en el [README principal](../README.md).
 
 ## Detalle técnico
 
